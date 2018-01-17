@@ -134,23 +134,31 @@ const actors = [{
 
 function calculPrice(pourcentage, i, j){
 
+	var charge = 0;
+	if(deliveries[i].options.deductibleReduction == true){
+		var charge = Math.floor(deliveries[i].volume);
+	}
+
 	var distance = deliveries[i].distance * truckers[j].pricePerKm;
 	var volume = deliveries[i].volume * truckers[j].pricePerVolume*(1 - pourcentage);
 
 	var shippingPrice = distance+volume;
 
-	//shippingPrice = shippingPrice - (shippingPrice*pourcentage);
 
-	deliveries[i].price = shippingPrice;
+	deliveries[i].price = shippingPrice + charge;
 
 	var commission = (shippingPrice*0.3);
 	var insurance = commission/2
+	var treasury = Math.ceil(deliveries[i].distance / 500);
+	var convargo = commission - (insurance + treasury) + charge;
 
 	deliveries[i].commission.insurance = insurance;
 
-	deliveries[i].commission.treasury = Math.floor(deliveries[i].distance / 500);
+	deliveries[i].commission.treasury = treasury;
 
-	deliveries[i].commission.convargo = insurance - deliveries[i].commission.treasury;
+	deliveries[i].commission.convargo = convargo;
+
+
 		
 }
 
