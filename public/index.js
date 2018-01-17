@@ -43,7 +43,7 @@ var deliveries = [{
   'id': '65203b0a-a864-4dea-81e2-e389515752a8',
   'shipper': 'librairie-lu-cie',
   'truckerId': '165d65ec-5e3f-488e-b371-d56ee100aa58',
-  'distance': 500,
+  'distance': 650,
   'volume': 12,
   'options': {
     'deductibleReduction': true
@@ -135,11 +135,11 @@ const actors = [{
 function calculPrice(pourcentage, i, j){
 
 	var distance = deliveries[i].distance * truckers[j].pricePerKm;
-	var volume = deliveries[i].volume * truckers[j].pricePerVolume;
+	var volume = deliveries[i].volume * truckers[j].pricePerVolume*(1 - pourcentage);
 
 	var shippingPrice = distance+volume;
 
-	shippingPrice = shippingPrice - (shippingPrice*pourcentage);
+	//shippingPrice = shippingPrice - (shippingPrice*pourcentage);
 
 	deliveries[i].price = shippingPrice;
 
