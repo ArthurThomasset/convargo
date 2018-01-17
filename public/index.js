@@ -129,23 +129,42 @@ const actors = [{
   }]
 }];
 
-function calculPrice(){
+function calculPrice(pourcentage, i, j){
+
+	var distance = deliveries[i].distance * truckers[j].pricePerKm;
+	var volume = deliveries[i].volume * truckers[j].pricePerVolume;
+
+	var shippingPrice = distance+volume;
+
+	shippingPrice = shippingPrice - (shippingPrice*pourcentage);
+
+	deliveries[i].price = shippingPrice;
+		
+		
+}
+
+function DecreasingPricing(){
 	for (var i = deliveries.length - 1; i >= 0; i--) {
 		for (var j = truckers.length - 1; j >= 0; j--) {
 		 if (deliveries[i].truckerId == truckers[j].id) {
-		 	var distance = deliveries[i].distance * truckers[j].pricePerKm;
-			var volume = deliveries[i].volume * truckers[j].pricePerVolume;
-
-			var shippingPrice = distance+volume;
-
-			deliveries[i].price = shippingPrice;
+		 	if(deliveries[i].volume < 5){
+		 		var pourcentage = 0;
+		 		calculPrice(pourcentage, i, j);}
+		 	else if (deliveries[i].volume < 10) { 
+		 		var pourcentage = 0.10;
+		 		calculPrice(pourcentage, i, j);}
+		 	else if (deliveries[i].volume < 25) { 
+		 		var pourcentage = 0.30;
+		 		calculPrice(pourcentage, i ,j);}
+		 	else { 
+		 		var pourcentage = 0.5
+		 		calculPrice(pourcentage, i,j);}
 		 }
 		}
-		
-		}
-		
+	}
 }
-calculPrice();
+
+DecreasingPricing();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
