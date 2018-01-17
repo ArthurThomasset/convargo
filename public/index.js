@@ -87,13 +87,19 @@ const actors = [{
     'who': 'insurance',
     'type': 'credit',
     'amount': 0
-  }, {
+  },
+  {
+    'who': 'treasury',
+    'type': 'credit',
+    'amount': 0
+  },
+   {
     'who': 'convargo',
     'type': 'credit',
     'amount': 0
   }]
 }, {
-  'rentalId': '65203b0a-a864-4dea-81e2-e389515752a8',
+  'deliveryId': '65203b0a-a864-4dea-81e2-e389515752a8',
   'payment': [{
     'who': 'shipper',
     'type': 'debit',
@@ -106,13 +112,19 @@ const actors = [{
     'who': 'insurance',
     'type': 'credit',
     'amount': 0
-  }, {
+  },
+  {
+    'who': 'treasury',
+    'type': 'credit',
+    'amount': 0
+  },
+   {
     'who': 'convargo',
     'type': 'credit',
     'amount': 0
   }]
 }, {
-  'rentalId': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
+  'deliveryId': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
   'payment': [{
     'who': 'shipper',
     'type': 'debit',
@@ -125,7 +137,13 @@ const actors = [{
     'who': 'insurance',
     'type': 'credit',
     'amount': 0
-  }, {
+  },
+  {
+    'who': 'treasury',
+    'type': 'credit',
+    'amount': 0
+  },
+   {
     'who': 'convargo',
     'type': 'credit',
     'amount': 0
@@ -158,6 +176,17 @@ function calculPrice(pourcentage, i, j){
 
 	deliveries[i].commission.convargo = convargo;
 
+	for (var z = actors.length - 1; z >= 0; z--) {
+		if (actors[z].deliveryId == deliveries[i].id) {
+			actors[z].payment[0].amount = shippingPrice + charge;
+			actors[z].payment[1].amount = shippingPrice - commission;
+			actors[z].payment[2].amount = insurance;
+			actors[z].payment[3].amount = treasury;
+			actors[z].payment[4].amount = convargo;
+		}
+	 
+	}
+
 
 		
 }
@@ -182,6 +211,7 @@ function DecreasingPricing(){
 		}
 	}
 }
+
 
 DecreasingPricing();
 console.log(truckers);
