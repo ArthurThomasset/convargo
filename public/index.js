@@ -129,6 +129,23 @@ const actors = [{
   }]
 }];
 
+function calculPrice(){
+	for (var i = deliveries.length - 1; i >= 0; i--) {
+		for (var j = truckers.length - 1; j >= 0; j--) {
+		 if (deliveries[i].truckerId == truckers[j].id) {
+		 	var distance = deliveries[i].distance * truckers[j].pricePerKm;
+			var volume = deliveries[i].volume * truckers[j].pricePerVolume;
+
+			var shippingPrice = distance+volume;
+
+			deliveries[i].price = shippingPrice;
+		 }
+		}
+		
+		}
+		
+}
+calculPrice();
 console.log(truckers);
 console.log(deliveries);
 console.log(actors);
