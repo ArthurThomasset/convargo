@@ -36,6 +36,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury':0,
     'convargo': 0
   }
 }, {
@@ -50,6 +51,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury':0,
     'convargo': 0
   }
 }, {
@@ -64,6 +66,7 @@ var deliveries = [{
   'price': 0,
   'commission': {
     'insurance': 0,
+    'treasury':0,
     'convargo': 0
   }
 }];
@@ -139,7 +142,15 @@ function calculPrice(pourcentage, i, j){
 	shippingPrice = shippingPrice - (shippingPrice*pourcentage);
 
 	deliveries[i].price = shippingPrice;
-		
+
+	var commission = (shippingPrice*0.3);
+	var insurance = commission/2
+
+	deliveries[i].commission.insurance = insurance;
+
+	deliveries[i].commission.treasury = Math.floor(deliveries[i].distance / 500);
+
+	deliveries[i].commission.convargo = insurance - deliveries[i].commission.treasury;
 		
 }
 
